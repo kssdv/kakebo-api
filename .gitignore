@@ -1,0 +1,3 @@
+venv/
+household_ledger.db
+__pycache__/
