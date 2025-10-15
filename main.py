@@ -2,6 +2,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
+# CORSミドルウェア追加
+from fastapi.middleware.cors import CORSMiddleware
 
 import models, schemas
 from database import SessionLocal, engine
@@ -10,6 +12,14 @@ from database import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+# CORS ミドルウェア追加
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "http://127.0.0.1:5500", # Live Server 같은 확장 프로그램 포트
+    "null" # 로컬 파일을 직접 열 때 (file://) Origin 헤더가 "null"이 될 수 있음
+]
 
 # データベース・セッション依存症注入
 def get_db():
